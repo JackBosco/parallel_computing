@@ -28,8 +28,8 @@ int main(int argc, char** argv){
     int64_t* array = make_ints();
 
     //Write all the other numbers, each on a seperate line
-    for (size_t i = 0; i < sizeof(array); i++){
-        fprintf(fptr, "%" PRIu64 "\n", *(array+i));
+    for (int i = 0; i < ARRAY_SIZE; i++){
+        fprintf(fptr, "%ld" "\n", *(array+i));
     }
     fclose(fptr);
 
