@@ -36,17 +36,14 @@ int main(int argc, char** argv){
     FILE* file = fopen(fname, "r");
 	int count = 0;
 	char* tok;
-	while(fgets(buffer, sizeof(buffer), file)!=NULL){
-		//fclose(file);
-		//count occurances
-		tok = strtok(buffer, " ,.-!?;:\"'\n\t");
+	while(fgets(buffer, sizeof(buffer), file)){
+		tok = strtok(buffer, " ");
 		while (tok != NULL){
 			cleanStr(tok);
-			printf(">%s\n", tok);
 			if (strcmp(tok, word)==0){
 				count++;
 			}
-			tok = strtok(NULL, " ,.-!?;:\"'\n\t");
+			tok = strtok(NULL, " ");
 		}
 	}
 	printf("%s count: %d\n\n", word, count);
