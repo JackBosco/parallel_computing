@@ -1,4 +1,5 @@
-Part 0
+Jack Bosco
+CSCI 320 Assignment 1 part 0
 
 1. changed size_t i to int i on line 31
 2. changed i<sizeof(array) to i< ARRAY_SIZE on line 31

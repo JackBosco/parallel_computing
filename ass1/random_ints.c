@@ -1,5 +1,7 @@
-
-
+/*
+Jack Bosco
+CSCI 320 Assignment 1
+*/
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>

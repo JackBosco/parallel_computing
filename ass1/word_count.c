@@ -1,3 +1,7 @@
+/*
+Author: Jack Bosco
+CSCI-320 Homework 1
+*/
 #include <stdio.h>
 #include <ctype.h>
 #include <stdlib.h>
