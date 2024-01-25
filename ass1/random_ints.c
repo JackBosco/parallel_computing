@@ -10,7 +10,7 @@ CSCI 320 Assignment 1
 #define ARRAY_SIZE 20
 
 int64_t* make_ints(){
-    int64_t* res = malloc(ARRAY_SIZE * sizeof(int64_t);
+    int64_t* res = malloc(ARRAY_SIZE * sizeof(int64_t));
 
     for (int i = 0; i < ARRAY_SIZE; i++){
         *(res+i) = 20 - rand()%(40);

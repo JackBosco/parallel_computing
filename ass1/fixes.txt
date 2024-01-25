@@ -4,3 +4,4 @@ CSCI 320 Assignment 1 part 0
 1. changed size_t i to int i on line 31
 2. changed i<sizeof(array) to i< ARRAY_SIZE on line 31
 3. changed "%" to "%ld" in fprintf on line 31
+4. changed static array to dynamic with malloc on line 13
