@@ -14,6 +14,7 @@ double* randoms_x;
 double* randoms_y;
 
 double find_pi(){
+	srand(time(NULL)); // seed the random numbers
     // Do the sequence for monte carlo
 	// 1. Randomly sample many points, (x, y) pairs, with each coordinate uniformly drawn between [−1, 1].
 	int count = 0;
