@@ -13,8 +13,8 @@ This is the first part of assignment 3, using sequential coding for the pi estim
 double find_pi(int n){
     //use the sequene to determine Pi from the amount of repitions passed in
 	double Pi = 0;
-	for (double i = 0.0; i<n; i++){
-		Pi += pow(-1.0, i) / (2*i + 1);
+	for (int i = 0; i<n; i++){
+		Pi += pow(-1.0, (double)i) / (2*i + 1);
 	}
     return 4 * Pi; 
 }
