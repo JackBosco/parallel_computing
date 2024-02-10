@@ -36,7 +36,7 @@ double find_pi(){
 	double ratio = (double)count / (double)n_seq;
 
 	// 5. Multiply by 4 to obtain π.
-    return ratio * 4;
+    return ratio * 4 * 4;
 }
 
 int main(int argc, char** argv){
