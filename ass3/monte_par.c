@@ -21,7 +21,7 @@ void* find_pi(void* thread_num){
 	// 1. Randomly sample many points, (x, y) pairs, with each coordinate uniformly drawn between [−1, 1].
 	int count = 0;
 	intptr_t tn = (intptr_t)thread_num;
-	srand(uint32_t 42 + tn); // 42 is the answer to everthing
+	srand((uint32_t) 42 + tn); // 42 is the answer to everthing
 	for (int i = tn * (n_seq/n_threads); i<(tn+1) * (n_seq/n_threads); i++){
 		double random_x = (double)rand() / (double)(RAND_MAX/2.0) - 1.0; // I stole this :)
 		double random_y = (double)rand() / (double)(RAND_MAX/2.0) - 1.0; // https://stackoverflow.com/questions/13408990/how-to-generate-random-float-number-in-c
