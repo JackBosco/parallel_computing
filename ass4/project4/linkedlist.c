@@ -13,8 +13,8 @@ typedef struct listNode node;
 
 void* Create(){
 	static struct listNode head = {
-		.next = NULL,
-		.prev = NULL,
+		.next = (void*) NULL,
+		.prev = (void*) NULL,
 		.val = -1
 	};
 	return &head;
@@ -23,7 +23,8 @@ void* Create(){
 int Insert(void* head, uint32_t value, uint32_t loc){
 	node* cur = (node*) head;
 	uint32_t i = 1;
-	while (cur->next != NULL && i < loc){ // go until we get to the end of the list or we run into loc
+
+	while (cur->next && i < loc){ // go until we get to the end of the list or we run into loc
 		cur = cur->next;
 		i++;
 	}
