@@ -1,0 +1,13 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "C/C++ Runner: Debug Session",
+      "type": "lldb",
+      "request": "launch",
+      "args": [],
+      "cwd": "/Users/josephbosco/School/parallel_computing",
+      "program": "/Users/josephbosco/School/parallel_computing/build/Debug/outDebug"
+    }
+  ]
+}

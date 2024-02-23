@@ -3,6 +3,7 @@ struct listNode{
 	struct listNode* next;
 	struct listNode* prev;
 	uint32_t val;
+	pthread_attr_t lock;
 };
 
 //This function constructs and returns a pointer to the head of the linkedlist

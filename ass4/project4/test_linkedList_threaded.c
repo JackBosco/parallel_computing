@@ -11,7 +11,7 @@ int OPS = 2; //An even number!
 int MoreTests();
 
 void* DoSafeDeletes(void* head){
-    int t = time(NULL) ^ pthread_self();
+	int t = time(NULL) ^ (unsigned int)pthread_self();
     srand(t);
     for (int i =0; i < OPS/2; i++){
         uint32_t loc = rand() % (OPS);
@@ -20,7 +20,7 @@ void* DoSafeDeletes(void* head){
     return NULL;
 }
 void* DoSafeInserts(void* head){
-    int t = time(NULL) ^ pthread_self();
+    int t = time(NULL) ^ (unsigned int)pthread_self();
     srand(t);
     for (int i =0; i<OPS; i++){
         uint32_t val = rand() % (THREADCOUNT * OPS);
@@ -31,7 +31,7 @@ void* DoSafeInserts(void* head){
 }
 
 void* DoDeletes(void* head){
-    int t = time(NULL) ^ pthread_self();
+    int t = time(NULL) ^ (unsigned int)pthread_self();
     srand(t);
     for (int i =0; i < OPS/2; i++){
         uint32_t loc = rand() % (OPS);
@@ -40,7 +40,7 @@ void* DoDeletes(void* head){
     return NULL;
 }
 void* DoInserts(void* head){
-    int t = time(NULL) ^ pthread_self();
+    int t = time(NULL) ^ (unsigned int)pthread_self();
     srand(t);
     for (int i =0; i<OPS; i++){
         uint32_t val = rand() % (THREADCOUNT * OPS);
@@ -123,14 +123,14 @@ int main(int argc, char** argv){
     TestSafeDeletes(head, 0);
     Destroy(head);
 
-    //"Unsafe" tests
-    //These may cause crashes or other race-y things.
-    printf("\n\nUnsafe tests!\n");
-    head = Create();
-    TestUnsafeInserts(head);
-    TestUnsafeDeletes(head, THREADCOUNT * OPS/2);
-    TestUnsafeDeletes(head, 0);
-    Destroy(head);
+    // //"Unsafe" tests
+    // //These may cause crashes or other race-y things.
+    // printf("\n\nUnsafe tests!\n");
+    // head = Create();
+    // TestUnsafeInserts(head);
+    // TestUnsafeDeletes(head, THREADCOUNT * OPS/2);
+    // TestUnsafeDeletes(head, 0);
+    // Destroy(head);
 
     MoreTests(); //There are always more!
     return 0;

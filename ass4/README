@@ -1,0 +1,5 @@
+Jack Bosco
+1746795
+
+the executable files are test_basic and test_threaded. I also removed all parallelism with mutex locks. 
+Only one thread goes at a time :)

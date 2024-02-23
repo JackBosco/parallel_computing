@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>
+#include <pthread.h>
 #include "linkedlist.h"
 
 typedef struct listNode node;
@@ -20,6 +21,8 @@ void* Create(){
 	head->next = tail;
 	tail->val = -1;
 	tail->next = NULL;
+
+	pthread_mutex_init(&(head->lock), NULL);
 	return head;
 }
 
@@ -42,16 +45,16 @@ int Insert(void* head, uint32_t value, uint32_t loc){
 
 int Delete(void* head, uint32_t loc){
 	node* cur = (node*) head;
-	uint32_t i = 0;
+	cur = cur->next;
+	uint32_t i = 1;
 	while (cur->next->next && i < loc){
 		cur = cur->next;
 		i++;
 	}
-	cur = cur->prev; //go back one
-	cur->next = cur->next->next;
-	free(cur->next->prev);
-	cur->next->prev = cur;
-	return 0;
+	cur->prev->next = cur->next; //go back one
+	cur->next->prev = cur->prev; //go forward one
+	free(cur);
+	return i;
 }
 
 void* Find(void* head, uint32_t value){
@@ -73,6 +76,7 @@ void* Find(void* head, uint32_t value){
 
 int Display(void* head){
 	node* cur = (node*) head;
+	int i = 0;
 	printf("[");
 	if (!cur->next->next){
 		printf("]\n");
@@ -81,9 +85,10 @@ int Display(void* head){
 	while (cur->next->next){
 		if (cur->val != -1) printf("%d,", cur->val);
 		cur = cur->next;
+		i++;
 	}
 	printf("%d]\n", cur->val);
-	return 0;
+	return i;
 }
 
 int Destroy(void* head){
@@ -94,4 +99,30 @@ int Destroy(void* head){
 	}
 	free(cur);
 	return 0;
+}
+
+//================== Parallel-safe methods================
+
+int SafeInsert(void* head, uint32_t value, uint32_t loc){ //Inserts an item of the value at the index loc. If loc is out-of-bounds, it should insert at the end of the list.
+	node* h = (node*) head;
+	pthread_mutex_lock(&h->lock);
+	int ret = Insert(head, value, loc);
+	pthread_mutex_unlock(&h->lock);
+	return ret;
+}
+
+int SafeDelete(void* head, uint32_t item){//Deletes the item at index loc. If loc is out-of-bounds, it should delete the last item in list.
+	node* h = (node*) head;
+	pthread_mutex_lock(&(h->lock));
+	int ret = Delete(head, item);
+	pthread_mutex_unlock(&h->lock);
+	return ret;
+}
+
+void* SafeFind(void* head, uint32_t value){//Finds whether a given item is in the list and returns a pointer to it!
+	node* h = (node*) head;
+	pthread_mutex_lock(&h->lock);
+	void* ret = Find(head, value);
+	pthread_mutex_unlock(&h->lock);
+	return ret;
 }
