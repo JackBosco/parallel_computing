@@ -1,4 +1,4 @@
-all: pomp momp
+all: pomp momp bsort
 
 momp: monte_omp.c
 	gcc monte_omp.c -o momp -Wall -fopenmp -lm
