@@ -24,7 +24,7 @@ double find_pi(){
 		double random_y = (double)rand() / (double)(RAND_MAX/2.0) - 1.0; // https://stackoverflow.com/questions/13408990/how-to-generate-random-float-number-in-c
 
 		// 2. Count the number of points which lie within the circle
-		double dist = sqrt(pow(random_x, 2.0) + pow(random_y, 2.0));
+		double dist = (random_x*random_x) + (random_y*random_y);
 		if (random_x >= 0.0 
 			&& random_y >= 0.0 
 			&& dist <= 1.0) {
@@ -40,6 +40,8 @@ double find_pi(){
 	// 5. Multiply by 4 to obtain π.
     return ratio * 4 * 4;
 }
+
+
 
 int main(int argc, char** argv){
     struct timespec start, end; //structs used for timing purposes, it has two memebers, a tv_sec which is the current second, and the tv_nsec which is the current nanosecond.

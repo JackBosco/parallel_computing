@@ -14,8 +14,10 @@ double find_pi(int n){
     double Pi = 0;
     //use the sequence to determine Pi from the amount of repitions passed in
 	# pragma omp parallel for reduction(+:Pi)
-    for (int i = 0; i<n; i++){
-		Pi += pow(-1.0, (double)i) / (2*i + 1);
+    for (int i=0; i<n; i++){
+		double posneg;
+		posneg=(i%2==0) ? 1.0 : -1.0;
+		Pi += (posneg) / (2.0*i + 1);
 	}
     return 4 * Pi; 
 }
