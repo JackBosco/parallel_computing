@@ -60,4 +60,5 @@ dkms.conf
 **/*.synctex.gz
 
 # midterm
-./midterm/*
+midterm
+temp*
