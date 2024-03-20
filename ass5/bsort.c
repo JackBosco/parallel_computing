@@ -3,6 +3,7 @@
 #include <stdint.h>
 #include <inttypes.h>
 #include <string.h>
+#include <time.h>
 
 #define BUFFER_SIZE 2048
 
@@ -70,9 +71,16 @@ int is_sorted(int64_t* input, uint64_t size){
 int main(int argc, char** argv){
     uint64_t n; //The input size
     int64_t* input = Populate("./numbers.txt", &n); //gets the array
+	double time_diff;
+	struct timespec start, end; //structs used for timing purposes, it has two memebers, a tv_sec which is the current second, and the tv_nsec which is the current nanosecond.
 
+	clock_gettime(CLOCK_MONOTONIC, &start); //Start the clock!
     my_sort(input, n);
-    
+    clock_gettime(CLOCK_MONOTONIC, &end);   //Stops the clock!
+
+	time_diff = (end.tv_sec - start.tv_sec); //Difference in seconds
+    time_diff += (end.tv_nsec - start.tv_nsec) / 1e9; //Difference in nanoseconds
+
     //check if it's sorted.
     int sorted = is_sorted(input, n);
     printf("Are the numbers sorted? %s \n", sorted ? "true" : "false");
