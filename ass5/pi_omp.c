@@ -8,12 +8,13 @@ This is the first part of assignment 3, using sequential coding for the pi estim
 #include <time.h>
 #include <math.h>
 
-#define N_SEQ 1000000;
+#define N_SEQ 10000000000;
 
 double find_pi(int n){
-    //use the sequene to determine Pi from the amount of repitions passed in
-	double Pi = 0;
-	for (int i = 0; i<n; i++){
+    double Pi = 0;
+    //use the sequence to determine Pi from the amount of repitions passed in
+	# pragma omp parallel for reduction(+:Pi)
+    for (int i = 0; i<n; i++){
 		Pi += pow(-1.0, (double)i) / (2*i + 1);
 	}
     return 4 * Pi; 
@@ -22,7 +23,7 @@ double find_pi(int n){
 int main(int argc, char** argv){
     struct timespec start, end; //structs used for timing purposes, it has two memebers, a tv_sec which is the current second, and the tv_nsec which is the current nanosecond.
     double time_diff;
-	int n;
+	long int n;
 	// get command line args
 	if (argc > 1) {
 		n = atoi(argv[1]);
@@ -38,6 +39,6 @@ int main(int argc, char** argv){
     time_diff += (end.tv_nsec - start.tv_nsec) / 1e9; //Difference in nanoseconds
 
     printf("The time taken is %f \n", time_diff);
-    printf("The number of terms in the sequence is %d \n", n);
+    printf("The number of terms in the sequence is %ld \n", n);
     printf("Pi is %.20lf\n", pi);
 }

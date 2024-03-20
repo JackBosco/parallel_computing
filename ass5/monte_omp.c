@@ -8,7 +8,7 @@ Do the monte carlo estimation sequentially
 #include <time.h>
 #include <math.h>
 
-#define N_SEQ 1000000
+#define N_SEQ 1000000000
 int n_seq;
 double* randoms_x;
 double* randoms_y;
@@ -17,7 +17,8 @@ double find_pi(){
 	srand(time(NULL)); // seed the random numbers
     // Do the sequence for monte carlo
 	// 1. Randomly sample many points, (x, y) pairs, with each coordinate uniformly drawn between [−1, 1].
-	int count = 0;
+	long int count = 0;
+	# pragma omp parallel for reduction(+:count)
 	for (int i = 0; i<n_seq; i++){
 		double random_x = (double)rand() / (double)(RAND_MAX/2.0) - 1.0; // I stole this :)
 		double random_y = (double)rand() / (double)(RAND_MAX/2.0) - 1.0; // https://stackoverflow.com/questions/13408990/how-to-generate-random-float-number-in-c
