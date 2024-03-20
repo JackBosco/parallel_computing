@@ -81,6 +81,9 @@ int main(int argc, char** argv){
 	time_diff = (end.tv_sec - start.tv_sec); //Difference in seconds
     time_diff += (end.tv_nsec - start.tv_nsec) / 1e9; //Difference in nanoseconds
 
+	//print the time
+	printf("Time elapsed: %f\n", time_diff);
+
     //check if it's sorted.
     int sorted = is_sorted(input, n);
     printf("Are the numbers sorted? %s \n", sorted ? "true" : "false");
