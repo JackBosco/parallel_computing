@@ -20,16 +20,14 @@ double find_pi(){
 	long int count = 0;
 	# pragma omp parallel for reduction(+:count)
 	for (int i = 0; i<n_seq; i++){
-		double random_x = (double)rand() / (double)(RAND_MAX/2.0) - 1.0; // I stole this :)
-		double random_y = (double)rand() / (double)(RAND_MAX/2.0) - 1.0; // https://stackoverflow.com/questions/13408990/how-to-generate-random-float-number-in-c
+		double random_x = rand() / (RAND_MAX/2.0) - 1.0; // I stole this :)
+		double random_y = rand() / (RAND_MAX/2.0) - 1.0; // https://stackoverflow.com/questions/13408990/how-to-generate-random-float-number-in-c
 
 		// 2. Count the number of points which lie within the circle
 		double dist = (random_x*random_x) + (random_y*random_y);
-		if (random_x >= 0.0 
-			&& random_y >= 0.0 
-			&& dist <= 1.0) {
-				count++;
-			}
+		if (dist <= 1.0) {
+			count++;
+		}
 	}
 	// 3. Count the total number of points which lie within the square (all of them)
 	// n_seq
@@ -38,7 +36,7 @@ double find_pi(){
 	double ratio = (double)count / (double)n_seq;
 
 	// 5. Multiply by 4 to obtain π.
-    return ratio * 4 * 4;
+    return ratio * 4;
 }
 
 
