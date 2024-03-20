@@ -36,7 +36,21 @@ int64_t* Populate(char* fname, uint64_t* size){
 }
 
 int my_sort(int64_t* input, uint64_t size){
-    //I don't know how to sort so just return 0
+    // do a bubble sort
+	// (a) Let i be 0, the index of the first element.
+	// (b) Compare A[i] and A[i + 1], if the ordering is incorrect (that is, if A[i] > A[i + 1]) then swap
+	// the position of the two elements. Let’s refer to this operation as a bubble operation.
+	// (c) Now increment i by 1.
+	// (d) Repeat steps (b) and (c) until we have completed one pass through the entire array, that is, until i == n.
+	for (int i = 0; i < size - 1; i++) {
+		for (int j = 0; j < size - i - 1; j++) {
+			if (input[j] > input[j + 1]) {
+				int64_t temp = input[j];
+				input[j] = input[j + 1];
+				input[j + 1] = temp;
+			}
+		}
+	}
     return 0;
 }
 
