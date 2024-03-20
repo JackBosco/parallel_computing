@@ -58,3 +58,6 @@ dkms.conf
 **/*.fls
 **/*.log
 **/*.synctex.gz
+
+# midterm
+./midterm/*
