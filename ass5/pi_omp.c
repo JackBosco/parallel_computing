@@ -32,7 +32,10 @@ int main(int argc, char** argv){
 	} else {
 		n = N_SEQ;
 	}
-    
+
+	//print no. reps
+	printf("Number of Sequences: %ld\n", n);
+
     clock_gettime(CLOCK_MONOTONIC, &start); //Start the clock!
     double pi = find_pi(n);
     clock_gettime(CLOCK_MONOTONIC, &end);   //Stops the clock!

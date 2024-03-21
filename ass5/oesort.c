@@ -36,21 +36,36 @@ int64_t* Populate(char* fname, uint64_t* size){
     return nums;
 }
 
-int my_sort(int64_t* input, uint64_t size){
-    // do a bubble sort
-	// (a) Let i be 0, the index of the first element.
-	// (b) Compare A[i] and A[i + 1], if the ordering is incorrect (that is, if A[i] > A[i + 1]) then swap
-	// the position of the two elements. Let’s refer to this operation as a bubble operation.
-	// (c) Now increment i by 1.
-	// (d) Repeat steps (b) and (c) until we have completed one pass through the entire array, that is, until i == n.
-	for (int i = 0; i < size - 1; i++) {
-		for (int j = 0; j < size - i - 1; j++) {
-			if (input[j] > input[j + 1]) {
+int bubble(int64_t* input, uint64_t size, int i){
+	if (i % 2 == 0){//even pass
+		#pragma omp parallel for //2b
+		for (uint64_t j = 0; j < size - 1; j += 2){
+			if (input[j] > input[j + 1]){
 				int64_t temp = input[j];
 				input[j] = input[j + 1];
 				input[j + 1] = temp;
 			}
 		}
+	} else {
+		#pragma omp parallel for //2a
+		for (uint64_t j = 1; j < size - 1; j += 2){
+			if (input[j] > input[j + 1]){
+				int64_t temp = input[j];
+				input[j] = input[j + 1];
+				input[j + 1] = temp;
+			}
+		}
+	}
+	return 0;
+}
+
+int my_sort(int64_t* input, uint64_t size){
+	// 1. Let the array to be sorted be array A, with n total elements within it.
+	// 2. Perform n passes through the array. During pass i:
+		// (a) If i is an odd pass, bubble every odd indexed element with the next one, in parallel
+		// (b) If i is an even pass, bubble every even indexed element with the next one, in parallel
+	for (uint64_t i = 0; i < size - 1; i++) {
+		bubble(input, size, i); // parts 2a and 2b
 	}
     return 0;
 }
@@ -75,7 +90,7 @@ int main(int argc, char** argv){
 	struct timespec start, end; //structs used for timing purposes, it has two memebers, a tv_sec which is the current second, and the tv_nsec which is the current nanosecond.
 
 	//print size
-	printf("Size of list: %d\n", n);
+	printf("Size of list: %ld\n", n);
 
 	clock_gettime(CLOCK_MONOTONIC, &start); //Start the clock!
     my_sort(input, n);
@@ -87,8 +102,7 @@ int main(int argc, char** argv){
     //check if it's sorted.
     int sorted = is_sorted(input, n);
     printf("Are the numbers sorted? %s \n", sorted ? "true" : "false");
-   
-	//print the time
-	printf("Time elapsed: %f\n", time_diff);
+
+    printf("Time elapsed: %f\n", time_diff);
     free(input);
 }

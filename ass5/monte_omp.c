@@ -51,6 +51,10 @@ int main(int argc, char** argv){
 	} else {
 		n_seq = N_SEQ;
 	}
+
+	//print no. reps
+	printf("Number of Estimations: %d\n", n_seq);
+
 	randoms_x = malloc(n_seq * sizeof(double));
 	randoms_y = malloc(n_seq * sizeof(double));
     clock_gettime(CLOCK_MONOTONIC, &start); //Start the clock!
