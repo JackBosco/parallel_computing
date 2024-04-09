@@ -33,14 +33,12 @@ int64_t* Populate(char* fname, uint64_t* size){
             }
         }
 	}
-	*size = i;
     return nums;
 }
 
 int join(int64_t* input, int64_t* temp, uint64_t size, uint64_t l, uint64_t m, uint64_t r){
 	for (uint64_t i=l; i<=r; i++){
 		temp[i] = input[i];
-		printf("i: %ld, temp[i] %ld", i, temp[i]);
 	}
 
 	uint64_t hl=l;
@@ -48,24 +46,22 @@ int join(int64_t* input, int64_t* temp, uint64_t size, uint64_t l, uint64_t m, u
 	uint64_t cur=l;
 
 	while (hl <= m && hr <= r) {
-		printf("hl: %ld, hr: %ld\n", hl, hr);
-		printf("temp[hl]: %ld, temp[hr]: %ld", temp[hl], temp[hr]);
 		if (temp[hl] <= temp[hr]){
 			input[cur] = temp[hl];
 			hl++;
-			printf("1");
 		} else {
 			input[cur] = temp[hr];
 			hr++;
-			printf("2");
 		}
 		cur++;
 	}
 
 	// I always forget to do this last part :)
 	// Copies the remaining left side of the temp array into the original
-	for (uint64_t i=0; i<=m-hl; i++) input[cur+i] = temp[hl+i];
-
+	int diff = m-hl;
+	for (int i=0; i<=diff; i++){
+		input[cur+i] = temp[hl+i];
+	}
 	return 0;
 }
 
@@ -77,7 +73,6 @@ int my_msort_helper(int64_t* input, int64_t* temp, uint64_t size, uint64_t l, ui
 	if (l<r){
 		int64_t m = l + ((r-l) / 2);
 		
-		printf("l: %ld, m: %ld, r: %ld\n", l,m,r);
 		my_msort_helper(input, temp, size/2, l, m);
 		my_msort_helper(input, temp, size/2, m+1, r);
 		join(input, temp, size, l, m, r);
@@ -117,7 +112,7 @@ int main(int argc, char** argv){
 	struct timespec start, end; //structs used for timing purposes, it has two memebers, a tv_sec which is the current second, and the tv_nsec which is the current nanosecond.
 
 	//print size
-	printf("Size of list: %ld\n", n);
+	printf("Size of list: %llu\n", n);
 
 	clock_gettime(CLOCK_MONOTONIC, &start); //Start the clock!
     my_msort(input, n);
