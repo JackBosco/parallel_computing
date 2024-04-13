@@ -71,14 +71,14 @@ Helper for msort
 int my_msort_helper(int64_t* input, int64_t* temp, uint64_t size, uint64_t l, uint64_t r){
     //I don't know how to sort so just return 0
     if (l<r){
+		int64_t m = l + ((r-l) / 2);
         # pragma omp parallel
         {
-            int64_t m = l + ((r-l) / 2);
             # pragma omp single
             {
-                # pragma omp task shared(input)
+                # pragma omp task shared(input, temp) firstprivate(l, r, m, size) final(size<1000000)
                 my_msort_helper(input, temp, (m-l+1), l, m);
-                # pragma omp task shared(input)
+                # pragma omp task shared(input, temp) firstprivate(l, r, m, size) final(size<1000000)
                 my_msort_helper(input, temp, (r-m), m+1, r);
                 #pragma omp taskwait
                 join(input, temp, size, l, m, r);

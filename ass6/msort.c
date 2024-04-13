@@ -112,7 +112,7 @@ int main(int argc, char** argv){
 	struct timespec start, end; //structs used for timing purposes, it has two memebers, a tv_sec which is the current second, and the tv_nsec which is the current nanosecond.
 
 	//print size
-	printf("Size of list: %llu\n", n);
+	printf("Size of list: %lu\n", n);
 
 	clock_gettime(CLOCK_MONOTONIC, &start); //Start the clock!
     my_msort(input, n);
