@@ -4,7 +4,6 @@
 #include <inttypes.h>
 #include <string.h>
 #include <time.h>
-#include <openmp.h>
 
 #define BUFFER_SIZE 2048
 
@@ -72,15 +71,19 @@ Helper for msort
 int my_msort_helper(int64_t* input, int64_t* temp, uint64_t size, uint64_t l, uint64_t r){
     //I don't know how to sort so just return 0
 	if (l<r){
-		int64_t m = l + ((r-l) / 2);
-		# pragma omp parallel sections
+		# pragma omp parallel
 		{
-			# pragma omp section
-			my_msort_helper(input, temp, size/2, l, r);
-			# pragma omp section
-			my_msort_helper(input, temp, size/2, l, r);
+			int64_t m = l + ((r-l) / 2);
+			# pragma omp single
+			{
+				# pragma omp task shared(input)
+				my_msort_helper(input, temp, size/2, l, r);
+				# pragma omp task shared(input)
+				my_msort_helper(input, temp, size/2, l, r);
+				#pragma omp taskwait
+				join(input, temp, size, l, m, r);
+			}
 		}
-		join(input, temp, size, l, m, r);
 	}
 	return 0;
 }
@@ -117,7 +120,7 @@ int main(int argc, char** argv){
 	struct timespec start, end; //structs used for timing purposes, it has two memebers, a tv_sec which is the current second, and the tv_nsec which is the current nanosecond.
 
 	//print size
-	printf("Size of list: %llu\n", n);
+	printf("Size of list: %lu\n", n);
 
 	clock_gettime(CLOCK_MONOTONIC, &start); //Start the clock!
     my_msort(input, n);
