@@ -63,5 +63,8 @@ dkms.conf
 midterm
 temp*
 
+# final exam
+final
+
 # random other stuff
 .vscode/
